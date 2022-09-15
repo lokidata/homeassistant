@@ -1,0 +1,61 @@
+automation:
+- alias: Mode Chauffage
+  description: ''
+  trigger:
+  - platform: calendar
+    event: start
+    offset: 0:0:0
+    entity_id: calendar.chauffage
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: "{{ 'Bureau' in trigger.calendar_event.summary }}"
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Bureau
+        target:
+          entity_id: input_select.workday
+    - conditions:
+      - condition: template
+        value_template: "{{ 'Télétravail' in trigger.calendar_event.summary }}"
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Télétravail
+        target:
+          entity_id: input_select.workday
+    - conditions:
+      - condition: template
+        value_template: "{{ 'Vacances' in trigger.calendar_event.summary }}"
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Férié / Vacances
+        target:
+          entity_id: input_select.workday
+  mode: single
+
+- alias: Chauffage période soir bureau
+  description: 'ajustement de l''heure de début de la période du soir'
+  trigger:
+  - platform: calendar
+    event: start
+    offset: 0:0:0
+    entity_id: calendar.tmontarou_gmail_com
+  condition:
+  - condition: template
+    value_template: '{{ ''PARIS MONTPARNASSE 1 ET 2 > LE MANS'' in trigger.calendar_event.summary
+      }}'
+  action:
+  - service: input_datetime.set_datetime
+    data:
+      time: '{{ states(''sensor.time'') }}'
+    target:
+      entity_id:
+      - input_datetime.heating_salon_start_2
+      - input_boolean.heating_cuisine_salleamanger_enabled_2
+      - input_boolean.heating_entree_enabled_2
+  mode: single

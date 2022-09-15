@@ -1,0 +1,22 @@
+group:  
+  group_spots_cuisine:
+    name: Spots Cuisine
+    icon: hass:lightbulb
+    entities:
+      - light.cuisine_spot_1_3
+      - light.cuisine_spot_3_2
+      - light.cuisine_spot_2
+
+  group_applique_chambre:
+    name: Chambre
+    icon: hass:lightbulb
+    entities:
+      - light.chambre
+      - light.chambre_2
+
+  group_cusine_salleamanger_pilot_wire:
+    name: Radiateurs Cusine - Salle a manger
+    icon: mdi:radiator-disabled
+    entities:
+      - switch.pilot_wire_salleamanger
+      - switch.pilot_wire_cuisine

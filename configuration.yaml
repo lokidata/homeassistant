@@ -1,0 +1,88 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+homeassistant:
+
+  name: "Home Assistant"
+
+  latitude: !secret latitute
+  longitude: !secret longitude
+
+  unit_system: metric
+
+  time_zone: "Europe/Paris"
+
+  customize: !include customize.yaml
+  packages: !include_dir_named packages
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+google_assistant: !include "integration/google_assistant.yaml"
+o365: !include "integration/o365.yaml"
+influxdb: !include "integration/influx.yaml"
+
+
+recorder:
+  purge_keep_days: 31
+  db_url: !secret mariadb
+  auto_purge: true 
+  include:
+      domains:
+        - sensor
+        - switch
+        - input_boolean
+        - light
+        - binary_sensor
+        - group
+  exclude:
+      entities:
+        - sensor.linky_uptime_2
+
+
+http:
+  cors_allowed_origins:
+    - https://google.com
+    - https://www.home-assistant.io
+  use_x_forwarded_for: true
+  trusted_proxies: 
+    - !secret trusted_poxie1
+    - !secret trusted_poxie1
+
+media_player:
+  - platform: androidtv
+    name: Salon NVIDIA Shield
+    host: !secret ip_shield
+    apps:
+      tv.emby.embyatv: Emby
+      com.wakanim.androidtv: Wakanim
+      com.canal.android.canal: MyCanal
+  - platform: androidtv
+    name: Salon TV
+    host: !secret ip_tv
+    apps:
+      tv.emby.embyatv: Emby
+      com.wakanim.androidtv: Wakanim
+      com.canal.android.canal: MyCanal
+      
+
+
+camera:
+  - platform: xiaomi_cloud_map_extractor
+    host: !secret ip_nono
+    name: nono_le_petit_robot_map
+    token: !secret robot_token
+    username: !secret robot_username
+    password: !secret robot_password
+    draw: ['all']
+    store_map_raw: true
+    attributes:
+      - calibration_points 
+

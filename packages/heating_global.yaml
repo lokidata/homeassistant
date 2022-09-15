@@ -1,0 +1,35 @@
+input_select:
+  workday:
+    name: Workday
+    options:
+      - Bureau
+      - Télétravail
+      - Férié / Vacances
+    initial: Bureau
+    icon: mdi:calendar-edit
+
+input_boolean:
+  homeoffice:
+    name: Home Office
+    icon: mdi:toggle-switch
+input_number:
+  away_temperature:
+    name: Température Absence 
+    min: 14
+    max: 26
+    step: 1.0
+    unit_of_measurement: °C
+    icon: 'mdi:thermometer-lines'
+  eco_temperature:
+    name: Température Eco
+    min: 14
+    max: 26
+    step: 1.0
+    unit_of_measurement: °C
+    icon: 'mdi:thermometer-lines'
+
+binary_sensor:
+- platform: template
+  sensors:
+    heating_enabled:
+      value_template: "{{ is_state('input_boolean.chauffage_on_off', 'on') }}"

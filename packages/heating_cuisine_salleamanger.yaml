@@ -1,0 +1,195 @@
+# SEMAINE
+input_datetime:
+  heating_cuisine_salleamanger_start_1:
+    name: "Confort : Début"
+    has_date: false
+    has_time: true
+  heating_cuisine_salleamanger_end_1:
+    name: "Confort : Fin"
+    has_date: false
+    has_time: true
+  heating_cuisine_salleamanger_start_2:
+    name: "Confort : Début"
+    has_date: false
+    has_time: true
+  heating_cuisine_salleamanger_end_2:
+    name: "Confort : Fin"
+    has_date: false
+    has_time: true
+  heating_cuisine_salleamanger_start_1_t:
+    name: "Confort : Début"
+    has_date: false
+    has_time: true
+#TELETRAVAIL
+  heating_cuisine_salleamanger_end_1_t:
+    name: "Confort : Fin"
+    has_date: false
+    has_time: true
+  heating_cuisine_salleamanger_start_2_t:
+    name: "Confort : Début"
+    has_date: false
+    has_time: true
+  heating_cuisine_salleamanger_end_2_t:
+    name: "Confort : Fin"
+    has_date: false
+    has_time: true
+  heating_cuisine_salleamanger_start_3_t:
+    name: "Confort : Début"
+    has_date: false
+    has_time: true
+  heating_cuisine_salleamanger_end_3_t:
+    name: "Confort : Fin"
+    has_date: false
+    has_time: true
+
+# WEEKEND
+  heating_cuisine_salleamanger_start_1_w:
+    name: "Confort : Début"
+    has_date: false
+    has_time: true
+  heating_cuisine_salleamanger_end_1_w:
+    name: "Confort : Fin"
+    has_date: false
+    has_time: true
+
+binary_sensor:
+  - platform: template
+    sensors:
+      heating_cuisine_salleamanger_1: # SEMAINE
+        friendly_name: Mode Confort
+        value_template: >
+          {% set t = states('sensor.time') %}
+          {% set start = states('input_datetime.heating_cuisine_salleamanger_start_1') [0:5] %}
+          {% set stop = states('input_datetime.heating_cuisine_salleamanger_end_1') [0:5] %}
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
+            and states('input_select.workday') == 'Bureau'
+            and states('input_boolean.heating_cuisine_salleamanger_enabled_1') == 'on' }}
+      heating_cuisine_salleamanger_2:
+        friendly_name: Mode Confort
+        value_template: >
+          {% set t = states('sensor.time') %}
+          {% set start = states('input_datetime.heating_cuisine_salleamanger_start_2') [0:5] %}
+          {% set stop = states('input_datetime.heating_cuisine_salleamanger_end_2') [0:5] %}
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('input_select.workday') == 'Bureau'
+            and states('input_boolean.heating_cuisine_salleamanger_enabled_2') == 'on' }}
+      heating_cuisine_salleamanger_1_t: #TELETRAVAIL
+        friendly_name: Mode Confort
+        value_template: >
+          {% set t = states('sensor.time') %}
+          {% set start = states('input_datetime.heating_cuisine_salleamanger_start_1_t') [0:5] %}
+          {% set stop = states('input_datetime.heating_cuisine_salleamanger_end_1_t') [0:5] %}
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('input_select.workday') == 'Télétravail'
+            and states('input_boolean.heating_cuisine_salleamanger_enabled_1_t') == 'on' }}
+      heating_cuisine_salleamanger_2_t:
+        friendly_name: Mode Confort
+        value_template: >
+          {% set t = states('sensor.time') %}
+          {% set start = states('input_datetime.heating_cuisine_salleamanger_start_2_t') [0:5] %}
+          {% set stop = states('input_datetime.heating_cuisine_salleamanger_end_2_t') [0:5] %}
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('input_select.workday') == 'Télétravail'
+            and states('input_boolean.heating_cuisine_salleamanger_enabled_2_t') == 'on' }}
+      heating_cuisine_salleamanger_3_t:
+        friendly_name: Mode Confort
+        value_template: >
+          {% set t = states('sensor.time') %}
+          {% set start = states('input_datetime.heating_cuisine_salleamanger_start_3_t') [0:5] %}
+          {% set stop = states('input_datetime.heating_cuisine_salleamanger_end_3_t') [0:5] %}
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('input_select.workday') == 'Télétravail'
+            and states('input_boolean.heating_cuisine_salleamanger_enabled_3_t') == 'on' }}
+      heating_cuisine_salleamanger_1_w: # WEEKEND
+        friendly_name: Mode Confort
+        value_template: >
+          {% set t = states('sensor.time') %}
+          {% set start = states('input_datetime.heating_cuisine_salleamanger_start_1_w') [0:5] %}
+          {% set stop = states('input_datetime.heating_cuisine_salleamanger_end_1_w') [0:5] %}
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('binary_sensor.not_workday_status') == 'on'
+            and states('input_boolean.heating_cuisine_salleamanger_enabled_1_w') == 'on' }}
+
+
+input_boolean:
+  heating_cuisine_salleamanger_enabled_1: #SEMAINE
+    name: Plage Active
+    icon: mdi:toggle-switch
+  heating_cuisine_salleamanger_enabled_2:
+    name: Plage Active
+    icon: mdi:toggle-switch
+
+  heating_cuisine_salleamanger_enabled_1_t: #TELETRAVAIL
+    name: Plage Active
+    icon: mdi:toggle-switch
+  heating_cuisine_salleamanger_enabled_2_t:
+    name: Plage Active
+    icon: mdi:toggle-switch
+  heating_cuisine_salleamanger_enabled_3_t:
+    name: Plage Active
+    icon: mdi:toggle-switch
+
+  heating_cuisine_salleamanger_enabled_1_w: # WEEKEND
+    name: Plage Active
+    icon: mdi:toggle-switch
+
+
+script:
+  heating_cuisine_salleamanger_boost:
+    alias: Boost cuisine_salleamanger
+    icon: mdi:timer-outline
+    sequence:
+    - event: schedy_set_value
+      event_data:
+        app_name: schedy_heating
+        room: cuisine_salleamanger
+        v: '{{ states.input_number.cuisine_salleamanger_boost_temperature.state }}'
+        rescheduling_delay: '{{ states.input_number.heating_cuisine_salleamanger_time_boost.state }}'
+
+  heating_cuisine_salleamanger_boost_reset:
+    alias: "Boost cuisine_salleamanger: Reset"
+    icon: mdi:timer-off-outline
+    sequence:
+    - event: schedy_set_value
+      event_data:
+        app_name: schedy_heating
+        room: chambre
+        v:  '{{ states.input_number.chambre_cuisine_salleamanger_temperature.state }}'
+        rescheduling_delay: 1
+
+input_number:
+  heating_cuisine_salleamanger_time_boost:
+    name: 'Boost : Durée'
+    initial: 60
+    min: 5
+    max: 360
+    step: 5
+    unit_of_measurement: Min.
+    icon: 'mdi:clock'
+  cuisine_salleamanger_boost_temperature:
+    name: Température Boost
+    min: 14
+    max: 26
+    step: 0.5
+    unit_of_measurement: °C
+    icon: 'mdi:thermometer-lines'
+  cuisine_salleamanger_confort_temperature:
+    name: Température Confort
+    min: 14
+    max: 26
+    step: 0.5
+    unit_of_measurement: °C
+    icon: 'mdi:thermometer-lines'
+
+
+sensor:
+- platform: template
+  sensors:
+    temp_up_th_cuisine_salleamanger: # Pour History Graph
+      friendly_name: "Chauffage Température"
+      value_template: > 
+        {% if is_state('climate.thermostat_cuisine_salle_a_manger', 'heat') %}
+          Chauffe {{state_attr ('climate.thermostat_cuisine_salle_a_manger', 'temperature')}}°
+        {% else %}
+          Off
+        {% endif %}

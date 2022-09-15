@@ -1,0 +1,133 @@
+# SEMAINE
+input_datetime:
+  heating_entree_start_1:
+    name: "Confort : Début"
+    has_date: false
+    has_time: true
+  heating_entree_end_1:
+    name: "Confort : Fin"
+    has_date: false
+    has_time: true
+  heating_entree_start_2:
+    name: "Confort : Début"
+    has_date: false
+    has_time: true
+  heating_entree_end_2:
+    name: "Confort : Fin"
+    has_date: false
+    has_time: true
+
+# WEEKEND
+  heating_entree_start_1_w:
+    name: "Confort : Début"
+    has_date: false
+    has_time: true
+  heating_entree_end_1_w:
+    name: "Confort : Fin"
+    has_date: false
+    has_time: true
+
+binary_sensor:
+  - platform: template
+    sensors:
+      heating_entree_1: # SEMAINE
+        friendly_name: Mode Confort
+        value_template: >
+          {% set t = states('sensor.time') %}
+          {% set start = states('input_datetime.heating_entree_start_1') [0:5] %}
+          {% set stop = states('input_datetime.heating_entree_end_1') [0:5] %}
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
+            and states('binary_sensor.workday_sensor') == 'on'
+            and states('input_boolean.heating_entree_enabled_1') == 'on' }}
+      heating_entree_2:
+        friendly_name: Mode Confort
+        value_template: >
+          {% set t = states('sensor.time') %}
+          {% set start = states('input_datetime.heating_entree_start_2') [0:5] %}
+          {% set stop = states('input_datetime.heating_entree_end_2') [0:5] %}
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('binary_sensor.workday_sensor') == 'on'
+            and states('input_boolean.heating_entree_enabled_2') == 'on' }}
+      heating_entree_1_w: # WEEKEND
+        friendly_name: Mode Confort
+        value_template: >
+          {% set t = states('sensor.time') %}
+          {% set start = states('input_datetime.heating_entree_start_1_w') [0:5] %}
+          {% set stop = states('input_datetime.heating_entree_end_1_w') [0:5] %}
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('binary_sensor.not_workday_status') == 'on'
+            and states('input_boolean.heating_entree_enabled_1_w') == 'on' }}
+
+
+input_boolean:
+  heating_entree_enabled_1: #SEMAINE
+    name: Plage Active
+    icon: mdi:toggle-switch
+  heating_entree_enabled_2:
+    name: Plage Active
+    icon: mdi:toggle-switch
+
+  heating_entree_enabled_1_w: # WEEKEND
+    name: Plage Active
+    icon: mdi:toggle-switch
+
+
+script:
+  heating_entree_boost:
+    alias: Boost entree
+    icon: mdi:timer-outline
+    sequence:
+    - event: schedy_set_value
+      event_data:
+        app_name: schedy_heating
+        room: entree
+        v: '{{ states.input_number.entree_boost_temperature.state }}'
+        rescheduling_delay: '{{ states.input_number.heating_entree_time_boost.state }}'
+
+  heating_entree_boost_reset:
+    alias: "Boost entree: Reset"
+    icon: mdi:timer-off-outline
+    sequence:
+    - event: schedy_set_value
+      event_data:
+        app_name: schedy_heating
+        room: entree
+        v:  '{{ states.input_number.chambre_entree_temperature.state }}'
+        rescheduling_delay: 1
+
+input_number:
+  heating_entree_time_boost:
+    name: 'Boost : Durée'
+    initial: 60
+    min: 5
+    max: 360
+    step: 5
+    unit_of_measurement: Min.
+    icon: 'mdi:clock'
+  entree_boost_temperature:
+    name: Température Boost
+    min: 14
+    max: 26
+    step: 0.5
+    unit_of_measurement: °C
+    icon: 'mdi:thermometer-lines'
+  entree_confort_temperature:
+    name: Température Confort
+    min: 14
+    max: 26
+    step: 0.5
+    unit_of_measurement: °C
+    icon: 'mdi:thermometer-lines'
+
+
+sensor:
+- platform: template
+  sensors:
+    temp_up_th_entree: # Pour History Graph
+      friendly_name: "Chauffage Température"
+      value_template: > 
+        {% if is_state('climate.thermostat_entree', 'heat') %}
+          Chauffe {{state_attr ('climate.thermostat_entree', 'temperature')}}°
+        {% else %}
+          Off
+        {% endif %}

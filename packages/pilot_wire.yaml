@@ -1,0 +1,92 @@
+switch:
+  - platform: template 
+    switches:
+      pilot_wire_bureau:
+        friendly_name: 'Convecteur : Bureau'
+        value_template: "{{ is_state('switch.zbmini_01_rad_bureau', 'off') }}" 
+        turn_on:
+          service: switch.turn_off
+          target:
+            entity_id:  switch.zbmini_01_rad_bureau
+        turn_off:
+          service: switch.turn_on
+          target:
+            entity_id:  switch.zbmini_01_rad_bureau
+  - platform: template 
+    switches:
+      pilot_wire_salon:
+        friendly_name: 'Convecteur : Salon'
+        value_template: "{{ is_state('switch.zbmini_01_rad_salon', 'off') }}" 
+        turn_on:
+          service: switch.turn_off
+          target:
+            entity_id:  switch.zbmini_01_rad_salon
+        turn_off:
+          service: switch.turn_on
+          target:
+            entity_id:  switch.zbmini_01_rad_salon
+  - platform: template 
+    switches:
+      pilot_wire_salleamanger:
+        friendly_name: 'Convecteur : Salle a manger'
+        value_template: "{{ is_state('switch.zbmini_01_rad_salleamanger', 'off') }}" 
+        turn_on:
+          service: switch.turn_off
+          target:
+            entity_id:  switch.zbmini_01_rad_salleamanger
+        turn_off:
+          service: switch.turn_on
+          target:
+            entity_id:  switch.zbmini_01_rad_salleamanger
+  - platform: template 
+    switches:
+      pilot_wire_entree:
+        friendly_name: 'Convecteur : Entrée'
+        value_template: "{{ is_state('switch.zbmini_01_rad_entree', 'off') }}" 
+        turn_on:
+          service: switch.turn_off
+          target:
+            entity_id:  switch.zbmini_01_rad_entree
+        turn_off:
+          service: switch.turn_on
+          target:
+            entity_id:  switch.zbmini_01_rad_entree
+  - platform: template 
+    switches:
+      pilot_wire_cuisine:
+        friendly_name: 'Convecteur : Cuisine'
+        value_template: "{{ is_state('switch.zbmini_01_rad_cuisine', 'off') }}" 
+        turn_on:
+          service: switch.turn_off
+          target:
+            entity_id:  switch.zbmini_01_rad_cuisine
+        turn_off:
+          service: switch.turn_on
+          target:
+            entity_id:  switch.zbmini_01_rad_cuisine
+  - platform: template 
+    switches:
+      pilot_wire_chambre:
+        friendly_name: 'Convecteur : Chambre'
+        value_template: "{{ is_state('switch.zbmini_01_rad_chambre', 'off') }}" 
+        turn_on:
+          service: switch.turn_off
+          target:
+            entity_id:  switch.zbmini_01_rad_chambre
+        turn_off:
+          service: switch.turn_on
+          target:
+            entity_id:  switch.zbmini_01_rad_chambre
+  - platform: template 
+    switches:
+      pilot_wire_petitechambre:
+        friendly_name: 'Convecteur : Petite Chambre'
+        value_template: "{{ is_state('switch.zbmini_01_rad_petitechambre', 'off') }}" 
+        turn_on:
+          service: switch.turn_off
+          target:
+            entity_id:  switch.zbmini_01_rad_petitechambre
+        turn_off:
+          service: switch.turn_on
+          target:
+            entity_id:  switch.zbmini_01_rad_petitechambre

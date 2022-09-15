@@ -1,0 +1,115 @@
+climate:
+  - platform: smart_thermostat
+    name: Thermostat Bureau
+    unique_id: smart_thermostat_bureau
+    heater: switch.pilot_wire_bureau
+    target_sensor: sensor.bureau_th_temperature
+    min_temp: 7
+    max_temp: 28
+    ac_mode: False
+    keep_alive:
+      seconds: 60
+    away_temp: 14
+    target_temp: 21
+    eco_temp: 15
+    boost_temp: 23
+    comfort_temp: 20
+    kp : 5
+    ki : 0.01
+    kd : 500
+    pwm : 00:15:00
+  - platform: smart_thermostat
+    name: Thermostat Chambre
+    unique_id: smart_thermostat_chambre
+    heater: switch.pilot_wire_chambre
+    target_sensor: sensor.chambre_th_temperature
+    min_temp: 7
+    max_temp: 28
+    ac_mode: False
+    keep_alive:
+      seconds: 60
+    away_temp: 14
+    target_temp: 21
+    eco_temp: 15
+    boost_temp: 23
+    comfort_temp: 20
+    kp : 5
+    ki : 0.01
+    kd : 500
+    pwm : 00:15:00
+  - platform: smart_thermostat
+    name: Thermostat Petite Chambre
+    unique_id: smart_thermostat_petitechambre
+    heater: switch.pilot_wire_petitechambre
+    target_sensor: sensor.petite_chambre_th_temperature
+    min_temp: 7
+    max_temp: 28
+    ac_mode: False
+    keep_alive:
+      seconds: 60
+    away_temp: 14
+    target_temp: 21
+    eco_temp: 15
+    boost_temp: 23
+    comfort_temp: 20
+    kp : 5
+    ki : 0.01
+    kd : 500
+    pwm : 00:15:00
+  - platform: smart_thermostat
+    name: Thermostat Salon
+    unique_id: smart_thermostat_salon
+    heater: switch.pilot_wire_salon
+    target_sensor: sensor.salon_th_temperature
+    min_temp: 7
+    max_temp: 28
+    ac_mode: False
+    keep_alive:
+      seconds: 60
+    away_temp: 14
+    target_temp: 21
+    eco_temp: 15
+    boost_temp: 23
+    comfort_temp: 20
+    kp : 5
+    ki : 0.01
+    kd : 500
+    pwm : 00:15:00
+  - platform: smart_thermostat
+    name: Thermostat Cuisine Salle a manger
+    unique_id: smart_thermostat_cuisine_salleamanger
+    heater: group.group_cusine_salleamanger_pilot_wire
+    target_sensor: sensor.cuisine_th_temperature
+    min_temp: 7
+    max_temp: 28
+    ac_mode: False
+    keep_alive:
+      seconds: 60
+    away_temp: 14
+    target_temp: 21
+    eco_temp: 15
+    boost_temp: 23
+    comfort_temp: 20
+    kp : 5
+    ki : 0.01
+    kd : 500
+    pwm : 00:15:00
+  - platform: smart_thermostat
+    name: Thermostat Entrée
+    unique_id: smart_thermostat_entree
+    heater: switch.pilot_wire_entree
+    target_sensor: sensor.entree_th_temperature
+    min_temp: 7
+    max_temp: 28
+    ac_mode: False
+    keep_alive:
+      seconds: 60
+    away_temp: 14
+    target_temp: 21
+    eco_temp: 15
+    boost_temp: 23
+    comfort_temp: 20
+    kp : 5
+    ki : 0.01
+    kd : 500
+    pwm : 00:15:00
