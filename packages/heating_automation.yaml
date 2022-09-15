@@ -44,7 +44,7 @@ automation:
   - platform: calendar
     event: start
     offset: 0:0:0
-    entity_id: calendar.tmontarou_gmail_com
+    entity_id: calendar.perso
   condition:
   - condition: template
     value_template: '{{ ''PARIS MONTPARNASSE 1 ET 2 > LE MANS'' in trigger.calendar_event.summary

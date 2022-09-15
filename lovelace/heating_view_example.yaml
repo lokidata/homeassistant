@@ -1,0 +1,148 @@
+type: custom:stack-in-card
+mode: vertical
+title: Chauffage Salon
+cards:
+  - type: custom:simple-thermostat
+    entity: climate.thermostat_salon
+    layout: null
+    step: row
+    header: false
+    control: false
+  - type: history-graph
+    hours_to_show: 48
+    entities:
+      - entity: sensor.temp_up_th_salon
+        name: ' '
+  - type: entities
+    entities:
+      - entity: binary_sensor.heating_enabled
+        name: Etat chauffage Global
+      - entity: schedy_room.schedy_heating_salon
+        name: Retour Schedy Salon
+      - entity: input_number.salon_confort_temperature
+    show_header_toggle: false
+    state_color: true
+    theme: teal
+    title: Schedy Salon
+    footer:
+      type: graph
+      entity: sensor.salon_th_temperature
+      hours_to_show: 24
+  - type: custom:fold-entity-row
+    head:
+      label: Boost
+      type: section
+    open: false
+    entities:
+      - script.heating_salon_boost
+      - script.heating_salon_boost_reset
+      - input_number.heating_salon_time_boost
+      - input_number.salon_boost_temperature
+  - type: custom:fold-entity-row
+    head:
+      label: Semaine
+      type: section
+    open: false
+    entities:
+      - type: custom:multiple-entity-row
+        entities:
+          - entity: binary_sensor.heating_salon_1
+            name: false
+            format: precision1
+          - entity: input_datetime.heating_salon_start_1
+            name: false
+          - entity: input_datetime.heating_salon_end_1
+            name: false
+        entity: input_boolean.heating_salon_enabled_1
+        name: Matin
+        show_state: false
+        toggle: false
+        icon: mdi:calendar-range
+        state_color: true
+      - entity: input_boolean.heating_salon_enabled_2
+        name: Soir
+        show_state: false
+        toggle: false
+        icon: mdi:calendar-range
+        type: custom:multiple-entity-row
+        state_color: true
+        entities:
+          - entity: binary_sensor.heating_salon_2
+            name: false
+            format: precision1
+          - entity: input_datetime.heating_salon_start_2
+            name: false
+          - entity: input_datetime.heating_salon_end_2
+            name: false
+  - type: custom:fold-entity-row
+    head:
+      label: Télétravail
+      type: section
+    open: false
+    entities:
+      - type: custom:multiple-entity-row
+        entities:
+          - entity: binary_sensor.heating_salon_1_t
+            name: false
+            format: precision1
+          - entity: input_datetime.heating_salon_start_1_t
+            name: false
+          - entity: input_datetime.heating_salon_end_1_t
+            name: false
+        entity: input_boolean.heating_salon_enabled_1_t
+        name: Matin
+        show_state: false
+        toggle: false
+        icon: mdi:calendar-range
+        state_color: true
+      - entity: input_boolean.heating_salon_enabled_2_t
+        name: Midi
+        show_state: false
+        toggle: false
+        icon: mdi:calendar-range
+        type: custom:multiple-entity-row
+        state_color: true
+        entities:
+          - entity: binary_sensor.heating_salon_2_t
+            name: false
+            format: precision1
+          - entity: input_datetime.heating_salon_start_2_t
+            name: false
+          - entity: input_datetime.heating_salon_end_2_t
+            name: false
+      - entity: input_boolean.heating_salon_enabled_3_t
+        name: Soir
+        show_state: false
+        toggle: false
+        icon: mdi:calendar-range
+        type: custom:multiple-entity-row
+        state_color: true
+        entities:
+          - entity: binary_sensor.heating_salon_3_t
+            name: false
+            format: precision1
+          - entity: input_datetime.heating_salon_start_3_t
+            name: false
+          - entity: input_datetime.heating_salon_end_3_t
+            name: false
+  - type: custom:fold-entity-row
+    head:
+      label: Weekend / Fériés / Vacances
+      type: section
+    open: false
+    entities:
+      - type: custom:multiple-entity-row
+        entities:
+          - entity: binary_sensor.heating_salon_1_w
+            name: false
+            format: precision1
+          - entity: input_datetime.heating_salon_start_1_w
+            name: false
+          - entity: input_datetime.heating_salon_end_1_w
+            name: false
+        entity: input_boolean.heating_salon_enabled_1_w
+        name: Journée
+        show_state: false
+        toggle: false
+        icon: mdi:calendar-range
+        state_color: true
