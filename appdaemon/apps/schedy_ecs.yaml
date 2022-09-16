@@ -5,7 +5,7 @@ schedy_ecs:
   actor_type: switch
 
   schedule_prepend:
-    - x: "off if is_on('input_boolean.absence_long_duree') else Next()"
+    - x: "'off' if is_on('input_boolean.absence_long_duree') else Next()"
 
   watched_entities:
   - input_boolean.absence_long_duree
@@ -27,5 +27,5 @@ schedy_ecs:
         - binary_sensor.ecs_2
       schedule:
       - rules:
-        - x: "on if (is_on('input_boolean.ecs_enabled_1') and (is_on('binary_sensor.ecs_1'))) else Next()"
-        - x: "on if (is_on('input_boolean.ecs_enabled_2') and (is_on('binary_sensor.ecs_2'))) else Next()"
+        - x: "'on' if (is_on('input_boolean.ecs_enabled_1') and (is_on('binary_sensor.ecs_1'))) else Next()"
+        - x: "'on' if (is_on('input_boolean.ecs_enabled_2') and (is_on('binary_sensor.ecs_2'))) else Next()"
