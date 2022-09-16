@@ -1,0 +1,31 @@
+schedy_ecs: 
+  module: hass_apps_loader
+  class: SchedyApp
+
+  actor_type: switch
+
+  schedule_prepend:
+    - x: "off if is_on('input_boolean.absence_long_duree') else Next()"
+
+  watched_entities:
+  - input_boolean.absence_long_duree
+
+  schedule_append:
+  - v: "off"
+
+  rooms:
+
+    ecs:
+      allow_manual_changes: true
+      rescheduling_delay: 1 
+      actors:
+        switch.zbmini_01_ecs:
+      watched_entities:
+        - input_boolean.ecs_enabled_1
+        - input_boolean.ecs_enabled_2
+        - binary_sensor.ecs_1
+        - binary_sensor.ecs_2
+      schedule:
+      - rules:
+        - x: "on if (is_on('input_boolean.ecs_enabled_1') and (is_on('binary_sensor.ecs_1'))) else Next()"
+        - x: "on if (is_on('input_boolean.ecs_enabled_2') and (is_on('binary_sensor.ecs_2'))) else Next()"

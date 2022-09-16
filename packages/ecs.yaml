@@ -1,0 +1,77 @@
+# SEMAINE
+input_datetime:
+  ecs_start_1:
+    name: "Plage Nuit : Début"
+    has_date: false
+    has_time: true
+  ecs_end_1:
+    name: "Plage Nuit : Fin"
+    has_date: false
+    has_time: true
+  ecs_start_2:
+    name: "Plage Après-Midi : Début"
+    has_date: false
+    has_time: true
+  ecs_end_2:
+    name: "Plage Après-Midi : Fin"
+    has_date: false
+    has_time: true
+
+
+
+binary_sensor:
+- platform: template
+  sensors:
+    ecs_status:
+      friendly_name: Etat Chauffe Eau
+      value_template: > 
+                    {{states('switch.zbmini_01_ecs') == 'on'}}
+    ecs_1: # SEMAINE
+      friendly_name: Plage Nuit
+      value_template: >
+        {% set t = states('sensor.time') %}
+        {% set start = states('input_datetime.ecs_start_1') [0:5] %}
+        {% set stop = states('input_datetime.ecs_end_1') [0:5] %}
+        {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
+          and states('sensor.linky_ptec') == 'HC..'
+          and states('input_boolean.ecs_enabled_1') == 'on' }}
+    ecs_2: # SEMAINE
+      friendly_name: Plage Après-Midi
+      value_template: >
+        {% set t = states('sensor.time') %}
+        {% set start = states('input_datetime.ecs_start_2') [0:5] %}
+        {% set stop = states('input_datetime.ecs_end_2') [0:5] %}
+        {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
+          and states('sensor.linky_ptec') == 'HC..'
+          and states('input_boolean.ecs_enabled_2') == 'on' }}
+
+input_boolean:
+  ecs_enabled_1: #SEMAINE
+    name: Nuit
+    icon: mdi:toggle-switch
+  ecs_enabled_2:
+    name: Après-Midi
+    icon: mdi:toggle-switch
+
+input_number:
+
+  ecs_boost_time:
+    name: 'Durée'
+    initial: 110
+    min: 5
+    max: 360
+    step: 5
+    unit_of_measurement: Min.
+    icon: 'mdi:clock'
+
+script:
+  ecs_boost:
+    alias: Marche forcée
+    icon: mdi:timer-outline
+    sequence:
+    - event: schedy_set_value
+      event_data:
+        app_name: schedy_ecs
+        room: ecs
+        v: 'on'
+        rescheduling_delay: '{{ states.input_number.ecs_boost_time.state }}'

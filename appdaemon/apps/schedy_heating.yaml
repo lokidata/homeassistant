@@ -83,7 +83,7 @@ schedy_heating:
             else Next()
         - x: >
             state('input_number.chambre_confort_temperature')
-            if (is_on('input_boolean.heating_chambre_enabled_2') and (is_on('binary_sensor.heating_chambre_2')))
+            if (is_on('input_boolean.heating_chambre_enabled_1_t') and (is_on('binary_sensor.heating_chambre_1_t')))
             else Next()
         #weekend
         - x: >

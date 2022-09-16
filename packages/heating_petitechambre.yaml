@@ -109,8 +109,8 @@ sensor:
     temp_up_th_petitechambre: # Pour History Graph
       friendly_name: "Chauffage Température"
       value_template: > 
-        {% if is_state('climate.thermostat_petitechambre', 'heat') %}
-          Chauffe {{state_attr ('climate.thermostat_petitechambre', 'temperature')}}°
+        {% if is_state('climate.thermostat_petite_chambre', 'heat') %}
+          Chauffe {{state_attr ('climate.thermostat_petite_chambre', 'temperature')}}°
         {% else %}
           Off
         {% endif %}
