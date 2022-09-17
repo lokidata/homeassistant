@@ -81,6 +81,7 @@ binary_sensor:
           {% set stop = states('input_datetime.heating_cuisine_salleamanger_end_1_t') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('input_select.workday') == 'Télétravail'
+            and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_cuisine_salleamanger_enabled_1_t') == 'on' }}
       heating_cuisine_salleamanger_2_t:
         friendly_name: Mode Confort
@@ -90,6 +91,7 @@ binary_sensor:
           {% set stop = states('input_datetime.heating_cuisine_salleamanger_end_2_t') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('input_select.workday') == 'Télétravail'
+            and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_cuisine_salleamanger_enabled_2_t') == 'on' }}
       heating_cuisine_salleamanger_3_t:
         friendly_name: Mode Confort
@@ -99,6 +101,7 @@ binary_sensor:
           {% set stop = states('input_datetime.heating_cuisine_salleamanger_end_3_t') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('input_select.workday') == 'Télétravail'
+            and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_cuisine_salleamanger_enabled_3_t') == 'on' }}
       heating_cuisine_salleamanger_1_w: # WEEKEND
         friendly_name: Mode Confort

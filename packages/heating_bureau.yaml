@@ -31,6 +31,7 @@ binary_sensor:
           {% set stop = states('input_datetime.heating_bureau_end_1_t') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
             and states('input_select.workday') == 'Télétravail'
+            and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_bureau_enabled_1_t') == 'on' }}
       heating_bureau_1_w: # WEEKEND
         friendly_name: Mode Confort
