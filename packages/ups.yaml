@@ -1,0 +1,36 @@
+automation:
+- alias: Onduleur sur batterie
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.eaton_status
+    from: Online
+    to: On Battery
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.nas
+  - service: notify.mobile_app_pixel_6
+    data:
+      message: Onduleur sur batterie
+      title: Onduleur
+  mode: single
+
+- alias: Onduleur Online
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.eaton_status
+    from: On Battery
+    to: Online
+  condition: []
+  action:
+  - service: notify.mobile_app_pixel_6
+    data:
+      message: Onduleur Online
+      title: Onduleur
+  mode: single
