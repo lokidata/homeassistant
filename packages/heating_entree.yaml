@@ -37,7 +37,7 @@ binary_sensor:
           {% set start = states('input_datetime.heating_entree_start_1') [0:5] %}
           {% set stop = states('input_datetime.heating_entree_end_1') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
-            and states('binary_sensor.workday_sensor') == 'on'
+            and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_entree_enabled_1') == 'on' }}
       heating_entree_2:
         friendly_name: Mode Confort
@@ -46,7 +46,7 @@ binary_sensor:
           {% set start = states('input_datetime.heating_entree_start_2') [0:5] %}
           {% set stop = states('input_datetime.heating_entree_end_2') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
-            and states('binary_sensor.workday_sensor') == 'on'
+            and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_entree_enabled_2') == 'on' }}
       heating_entree_1_w: # WEEKEND
         friendly_name: Mode Confort

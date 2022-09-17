@@ -63,7 +63,7 @@ binary_sensor:
           {% set start = states('input_datetime.heating_salon_start_1') [0:5] %}
           {% set stop = states('input_datetime.heating_salon_end_1') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
-            and states('input_select.workday') == 'Bureau'
+            and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_salon_enabled_1') == 'on' }}
       heating_salon_2:
         friendly_name: Mode Confort
@@ -72,7 +72,7 @@ binary_sensor:
           {% set start = states('input_datetime.heating_salon_start_2') [0:5] %}
           {% set stop = states('input_datetime.heating_salon_end_2') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
-            and states('input_select.workday') == 'Bureau'
+            and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_salon_enabled_2') == 'on' }}
       heating_salon_1_t: # TELETRAVAIL
         friendly_name: Mode Confort

@@ -4,7 +4,7 @@ binary_sensor:
       workday_status: 
         friendly_name: Status Workday
         value_template: >
-                    {{states('input_select.workday') == 'Télétravail' or states('binary_sensor.workday_sensor') == 'on' }}
+                    {{states('input_select.workday') == 'Bureau' or states('binary_sensor.workday_sensor') == 'on' }}
 
       not_workday_status: 
         friendly_name: Status Not Workday

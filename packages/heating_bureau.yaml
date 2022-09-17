@@ -50,9 +50,7 @@ input_boolean:
   heating_bureau_enabled_1_w: # WEEKEND
     name: Plage Active
     icon: mdi:toggle-switch
-  heating_bureau_boost: # WEEKEND
-    name: Mode Boost
-    icon: mdi:toggle-switch
+
 
 script:
   heating_bureau_boost:
