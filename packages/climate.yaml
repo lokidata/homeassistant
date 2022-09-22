@@ -98,7 +98,7 @@ climate:
     name: Thermostat Entrée
     unique_id: smart_thermostat_entree
     heater: switch.pilot_wire_entree
-    target_sensor: sensor.entree_th_temperature
+    target_sensor: sensor.entree_temperature
     min_temp: 7
     max_temp: 28
     ac_mode: False
