@@ -56,6 +56,6 @@ automation:
     target:
       entity_id:
       - input_datetime.heating_salon_start_2
-      - input_boolean.heating_cuisine_salleamanger_enabled_2
-      - input_boolean.heating_entree_enabled_2
+      - input_datetime.heating_cuisine_salleamanger_start_2
+      - input_datetime.heating_entree_start_2
   mode: single

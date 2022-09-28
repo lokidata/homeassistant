@@ -19,7 +19,7 @@ schedy_ecs:
       allow_manual_changes: true
       rescheduling_delay: 1 
       actors:
-        switch.ecs:
+        switch.zbmini_01_ecs:
       watched_entities:
         - input_boolean.ecs_enabled_1
         - input_boolean.ecs_enabled_2

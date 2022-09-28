@@ -25,7 +25,7 @@ binary_sensor:
     ecs_status:
       friendly_name: Etat Chauffe Eau
       value_template: > 
-                    {{states('switch.ecs') == 'on'}}
+                    {{states('switch.zbmini_01_ecs') == 'on'}}
     ecs_1: # SEMAINE
       friendly_name: Plage Nuit
       value_template: >
@@ -58,7 +58,7 @@ input_number:
   ecs_boost_time:
     name: 'Durée'
     initial: 110
-    min: 5
+    min: 1
     max: 360
     step: 5
     unit_of_measurement: Min.
