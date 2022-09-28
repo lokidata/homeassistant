@@ -113,3 +113,22 @@ climate:
     ki : 0.01
     kd : 500
     pwm : 00:15:00
+  - platform: smart_thermostat
+    name: Thermostat SdB
+    unique_id: smart_thermostat_sdb
+    heater: switch.pilot_wire_sdb
+    target_sensor: sensor.salle_de_bain_th_temperature
+    min_temp: 7
+    max_temp: 28
+    ac_mode: False
+    keep_alive:
+      seconds: 60
+    away_temp: 14
+    target_temp: 21
+    eco_temp: 15
+    boost_temp: 23
+    comfort_temp: 20
+    kp : 5
+    ki : 0.01
+    kd : 500
+    pwm : 00:15:00
