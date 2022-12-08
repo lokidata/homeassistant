@@ -5,7 +5,7 @@ automation:
   - platform: calendar
     event: start
     offset: 0:0:0
-    entity_id: calendar.chauffage
+    entity_id: calendar.perso
   condition: []
   action:
   - choose:
@@ -58,4 +58,212 @@ automation:
       - input_datetime.heating_salon_start_2
       - input_datetime.heating_cuisine_salleamanger_start_2
       - input_datetime.heating_entree_start_2
+  mode: single
+
+- id: '167042452476238'
+  alias: Delestage
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.delesteur
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: 
+        - input_boolean.power_rad_bureau_ok
+        - input_boolean.power_rad_cuisine_salleamanger_ok
+        - input_boolean.power_rad_salon_ok
+        - input_boolean.power_rad_chambre_ok
+        - input_boolean.power_rad_entree_ok
+        - input_boolean.power_rad_petitechambre_ok
+        - input_boolean.power_rad_sdb_ok
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - service: automation.trigger
+    data: {}
+    target:
+      entity_id: automation.puissance_chambre_ok
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: automation.trigger
+    data: {}
+    target:
+      entity_id: automation.puissance_petite_chambre_ok
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: automation.trigger
+    data: {}
+    target:
+      entity_id: automation.puissance_sdb_ok
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: automation.trigger
+    data: {}
+    target:
+      entity_id: automation.puissance_bureau_ok
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: automation.trigger
+    data: {}
+    target:
+      entity_id: automation.puissance_salon_ok
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: automation.trigger
+    data: {}
+    target:
+      entity_id: automation.puissance_salle_manger_ok
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: automation.trigger
+    data: {}
+    target:
+      entity_id: automation.puissance_entree_ok
+  mode: single
+
+
+
+- id: '167042452476239'
+  alias: Puissance Bureau OK
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.power_rad_bureau_dispo
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.power_rad_bureau_ok
+  mode: single
+
+- id: '167042452476240'
+  alias: Puissance Salle manger OK
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.power_rad_cuisine_salleamanger_dispo
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.power_rad_cuisine_salleamanger_ok
+  mode: single
+
+- id: '167042452476241'
+  alias: Puissance Salon OK
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.power_rad_salon_dispo
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.power_rad_salon_ok
+  mode: single
+
+- id: '167042452476242'
+  alias: Puissance Chambre OK
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.power_rad_chambre_dispo
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.power_rad_chambre_ok
+  mode: single
+
+- id: '167042452476243'
+  alias: Puissance Entree OK
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.power_rad_entree_dispo
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.power_rad_entree_ok
+  mode: single
+
+- id: '167042452476244'
+  alias: Puissance Petite Chambre OK
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.power_rad_petitechambre_dispo
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.power_rad_petitechambre_ok
+  mode: single
+
+- id: '167042452476245'
+  alias: Puissance SdB OK
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.power_rad_sdb_dispo
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.power_rad_sdb_ok
   mode: single

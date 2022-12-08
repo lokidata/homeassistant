@@ -62,7 +62,8 @@ binary_sensor:
           {% set t = states('sensor.time') %}
           {% set start = states('input_datetime.heating_salon_start_1') [0:5] %}
           {% set stop = states('input_datetime.heating_salon_end_1') [0:5] %}
-          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('input_select.workday') == 'Bureau' 
             and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_salon_enabled_1') == 'on' }}
       heating_salon_2:
@@ -72,6 +73,7 @@ binary_sensor:
           {% set start = states('input_datetime.heating_salon_start_2') [0:5] %}
           {% set stop = states('input_datetime.heating_salon_end_2') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('input_select.workday') == 'Bureau'
             and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_salon_enabled_2') == 'on' }}
       heating_salon_1_t: # TELETRAVAIL
@@ -113,7 +115,10 @@ binary_sensor:
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('binary_sensor.not_workday_status') == 'on'
             and states('input_boolean.heating_salon_enabled_1_w') == 'on' }}
-
+      power_rad_salon_dispo:
+        friendly_name: Puissance dispo
+        value_template: >
+          {{ states('sensor.linky_i_sousc') | int *200 - states('sensor.linky_papp') | int <= 2000}} 
 
 input_boolean:
   heating_salon_enabled_1: #SEMAINE
@@ -136,7 +141,9 @@ input_boolean:
   heating_salon_enabled_1_w: # WEEKEND
     name: Plage Active
     icon: mdi:toggle-switch
-
+  power_rad_salon_ok:
+    name: Thermostat activé
+    icon: mdi:toggle-switch
 
 script:
   heating_salon_boost:
@@ -192,8 +199,8 @@ sensor:
     temp_up_th_salon: # Pour History Graph
       friendly_name: "Chauffage Température"
       value_template: > 
-        {% if is_state('climate.thermostat_salon', 'heat') %}
-          Chauffe {{state_attr ('climate.thermostat_salon', 'temperature')}}°
+        {% if is_state('climate.thermostat_salon_2', 'heat') %}
+          Chauffe {{state_attr ('climate.thermostat_salon_2', 'temperature')}}°
         {% else %}
           Off
         {% endif %}

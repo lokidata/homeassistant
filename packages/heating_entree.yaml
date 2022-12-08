@@ -36,7 +36,8 @@ binary_sensor:
           {% set t = states('sensor.time') %}
           {% set start = states('input_datetime.heating_entree_start_1') [0:5] %}
           {% set stop = states('input_datetime.heating_entree_end_1') [0:5] %}
-          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('input_select.workday') == 'Bureau' 
             and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_entree_enabled_1') == 'on' }}
       heating_entree_2:
@@ -57,7 +58,10 @@ binary_sensor:
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('binary_sensor.not_workday_status') == 'on'
             and states('input_boolean.heating_entree_enabled_1_w') == 'on' }}
-
+      power_rad_entree_dispo:
+        friendly_name: Puissance dispo
+        value_template: >
+          {{ states('sensor.linky_i_sousc') | int *200 - states('sensor.linky_papp') | int <= 1000}} 
 
 input_boolean:
   heating_entree_enabled_1: #SEMAINE
@@ -71,6 +75,9 @@ input_boolean:
     name: Plage Active
     icon: mdi:toggle-switch
 
+  power_rad_entree_ok:
+    name: Thermostat activé
+    icon: mdi:toggle-switch
 
 script:
   heating_entree_boost:
@@ -92,7 +99,7 @@ script:
       event_data:
         app_name: schedy_heating
         room: entree
-        v:  '{{ states.input_number.chambre_entree_temperature.state }}'
+        v:  '{{ states.input_number.entree_confort_temperature.state }}'
         rescheduling_delay: 1
 
 input_number:
@@ -126,8 +133,8 @@ sensor:
     temp_up_th_entree: # Pour History Graph
       friendly_name: "Chauffage Température"
       value_template: > 
-        {% if is_state('climate.thermostat_entree', 'heat') %}
-          Chauffe {{state_attr ('climate.thermostat_entree', 'temperature')}}°
+        {% if is_state('climate.thermostat_entree_2', 'heat') %}
+          Chauffe {{state_attr ('climate.thermostat_entree_2', 'temperature')}}°
         {% else %}
           Off
         {% endif %}

@@ -37,19 +37,20 @@ binary_sensor:
           {% set t = states('sensor.time') %}
           {% set start = states('input_datetime.heating_sdb_start_1') [0:5] %}
           {% set stop = states('input_datetime.heating_sdb_end_1') [0:5] %}
-          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('input_select.workday') == 'Bureau' 
             and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_sdb_enabled_1') == 'on' }}
       heating_sdb_1_t: # TELETRVAIL
         friendly_name: Mode Confort
         value_template: >
           {% set t = states('sensor.time') %}
-          {% set start = states('input_datetime.heating_sdb_start_2') [0:5] %}
-          {% set stop = states('input_datetime.heating_sdb_end_2') [0:5] %}
+          {% set start = states('input_datetime.heating_sdb_start_1_t') [0:5] %}
+          {% set stop = states('input_datetime.heating_sdb_end_1_t') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('input_select.workday') == 'Télétravail'
             and states('binary_sensor.workday_status') == 'on'
-            and states('input_boolean.heating_sdb_enabled_2') == 'on' }}
+            and states('input_boolean.heating_sdb_enabled_1_t') == 'on' }}
       heating_sdb_1_w: # WEEKEND
         friendly_name: Mode Confort
         value_template: >
@@ -59,7 +60,10 @@ binary_sensor:
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('binary_sensor.not_workday_status') == 'on'
             and states('input_boolean.heating_sdb_enabled_1_w') == 'on' }}
-
+      power_rad_sdb_dispo:
+        friendly_name: Puissance dispo
+        value_template: >
+          {{ states('sensor.linky_i_sousc') | int *200 - states('sensor.linky_papp') | int <= 1000}} 
 
 input_boolean:
   heating_sdb_enabled_1: #SEMAINE
@@ -74,6 +78,9 @@ input_boolean:
   heating_sdb_boost: # WEEKEND
     name: Mode Boost
     icon: mdi:toggle-switch
+  power_rad_sdb_ok:
+    name: Thermostat activé
+    icon: mdi:toggle-switch
 
 script:
   heating_sdb_boost:
@@ -83,7 +90,7 @@ script:
     - event: schedy_set_value
       event_data:
         app_name: schedy_heating
-        room: sdb
+        room: salledebain
         v: '{{ states.input_number.sdb_boost_temperature.state }}'
         rescheduling_delay: '{{ states.input_number.heating_sdb_time_boost.state }}'
 
@@ -94,8 +101,8 @@ script:
     - event: schedy_set_value
       event_data:
         app_name: schedy_heating
-        room: sdb
-        v:  '{{ states.input_number.sdb_confort_temperature.state }}'
+        room: salledebain
+        v:  'OFF'
         rescheduling_delay: 1
 
 input_number:
@@ -129,8 +136,8 @@ sensor:
     temp_up_th_sdb: # Pour History Graph
       friendly_name: "Chauffage Température"
       value_template: > 
-        {% if is_state('climate.thermostat_sdb', 'heat') %}
-          Chauffe {{state_attr ('climate.thermostat_sdb', 'temperature')}}°
+        {% if is_state('climate.thermostat_sdb_2', 'heat') %}
+          Chauffe {{state_attr ('climate.thermostat_sdb_2', 'temperature')}}°
         {% else %}
           Off
         {% endif %}

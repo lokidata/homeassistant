@@ -19,11 +19,6 @@ schedy_heating:
   - input_boolean.chauffage_on_off
   - switch.delesteur
   - input_boolean.absence_long_duree
-  - sensor.linky_papp
-  - sensor.power_rad_1000
-  - sensor.power_rad_1250
-  - sensor.power_rad_2000
-  - sensor.power_rad_3250
   - input_number.eco_temperature
   - input_number.away_temperature
 
@@ -34,7 +29,7 @@ schedy_heating:
       allow_manual_changes: true
       rescheduling_delay: 1 # overwrite conf manuelle au bout de 2h.
       actors:
-        climate.thermostat_sdb:
+        climate.thermostat_sdb_2:
       watched_entities:
         - binary_sensor.snzb04_sdb_porte_contact
         - input_number.sdb_confort_temperature
@@ -44,9 +39,10 @@ schedy_heating:
         - binary_sensor.heating_sdb_1
         - binary_sensor.heating_sdb_1_t
         - binary_sensor.heating_sdb_1_w
+        - input_boolean.power_rad_sdb_ok
       schedule:
       - rules:
-        - x: "OFF if float(state('sensor.linky_papp')) >= float(state('sensor.power_rad_1000'))  else Next()"
+        - x: "OFF if is_off('input_boolean.power_rad_sdb_ok') else Next()"
         - x: "state('input_number.away_temperature') if is_on('input_boolean.absence_long_duree') else Next()"
         #semaine:
         - x: >
@@ -69,16 +65,17 @@ schedy_heating:
       allow_manual_changes: true
       rescheduling_delay: 1 # overwrite conf manuelle au bout de 2h.
       actors:
-        climate.thermostat_bureau:
+        climate.thermostat_bureau_2:
       watched_entities:
         - input_number.bureau_confort_temperature
         - input_boolean.heating_bureau_enabled_1_t
         - input_boolean.heating_bureau_enabled_1_w
         - binary_sensor.heating_bureau_1_t
         - binary_sensor.heating_bureau_1_w
+        - input_boolean.power_rad_bureau_ok
       schedule:
       - rules:
-        - x: "OFF if float(state('sensor.linky_papp')) >= float(state('sensor.power_rad_1250'))  else Next()"
+        - x: "OFF if is_off('input_boolean.power_rad_bureau_ok') else Next()"
         - x: "state('input_number.away_temperature') if is_on('input_boolean.absence_long_duree') else Next()"
         #teletravail:
         - x: >
@@ -97,7 +94,7 @@ schedy_heating:
       allow_manual_changes: true
       rescheduling_delay: 1 # overwrite conf manuelle au bout de 2h.
       actors:
-        climate.thermostat_chambre:
+        climate.thermostat_chambre_2:
       watched_entities:
         - input_number.chambre_confort_temperature
         - input_boolean.heating_chambre_enabled_1
@@ -106,10 +103,11 @@ schedy_heating:
         - binary_sensor.heating_chambre_1
         - binary_sensor.heating_chambre_1_t
         - binary_sensor.heating_chambre_1_w
+        - input_boolean.power_rad_chambre_ok
 
       schedule:
       - rules:
-        - x: "OFF if float(state('sensor.linky_papp')) >= float(state('sensor.power_rad_1250'))  else Next()"
+        - x: "OFF if is_off('input_boolean.power_rad_chambre_ok') else Next()"
         - x: "state('input_number.away_temperature') if is_on('input_boolean.absence_long_duree') else Next()"
         #semaine:
         - x: >
@@ -131,16 +129,17 @@ schedy_heating:
       allow_manual_changes: true
       rescheduling_delay: 1 # overwrite conf manuelle au bout de 2h.
       actors:
-        climate.thermostat_petite_chambre:
+        climate.thermostat_petite_chambre_2:
       watched_entities:
         - input_number.petitechambre_confort_temperature
         - input_boolean.heating_petitechambre_enabled_1
         - input_boolean.heating_petitechambre_enabled_1_w
         - binary_sensor.heating_petitechambre_1
         - binary_sensor.heating_petitechambre_1_w
+        - input_boolean.power_rad_petitechambre_ok
       schedule:
       - rules:
-        - x: "OFF if float(state('sensor.linky_papp')) >= float(state('sensor.power_rad_1250'))  else Next()"
+        - x: "OFF if is_off('input_boolean.power_rad_petitechambre_ok') else Next()"
         - x: "state('input_number.away_temperature') if is_on('input_boolean.absence_long_duree') else Next()" 
         #semaine:
         - x: >
@@ -159,7 +158,7 @@ schedy_heating:
       allow_manual_changes: true
       rescheduling_delay: 1 # overwrite conf manuelle au bout de 2h.
       actors:
-        climate.thermostat_salon:
+        climate.thermostat_salon_2:
       watched_entities:
         - input_number.salon_confort_temperature
         - input_boolean.heating_salon_enabled_1
@@ -173,10 +172,11 @@ schedy_heating:
         - binary_sensor.heating_salon_1_t
         - binary_sensor.heating_salon_2_t
         - binary_sensor.heating_salon_3_t
-        - binary_sensor.heating_salon_1_w        
+        - binary_sensor.heating_salon_1_w
+        - input_boolean.power_rad_salon_ok        
       schedule:
       - rules:
-        - x: "OFF if float(state('sensor.linky_papp')) >= float(state('sensor.power_rad_2000'))  else Next()"
+        - x: "OFF if is_off('input_boolean.power_rad_salon_ok') else Next()"
         - x: "state('input_number.away_temperature') if is_on('input_boolean.absence_long_duree') else Next()"
         #teletravail
         - x: >
@@ -211,7 +211,7 @@ schedy_heating:
       allow_manual_changes: true
       rescheduling_delay: 1 # overwrite conf manuelle au bout de 2h.
       actors:
-        climate.thermostat_cuisine_salle_a_manger:
+        climate.thermostat_cuisine_salle_a_manger_2:
       watched_entities:
         - input_number.cuisine_salleamanger_confort_temperature
         - input_boolean.heating_cuisine_salleamanger_enabled_1
@@ -225,10 +225,12 @@ schedy_heating:
         - binary_sensor.heating_cuisine_salleamanger_1_t
         - binary_sensor.heating_cuisine_salleamanger_2_t
         - binary_sensor.heating_cuisine_salleamanger_3_t
-        - binary_sensor.heating_cuisine_salleamanger_1_w        
+        - binary_sensor.heating_cuisine_salleamanger_1_w
+        - binary_sensor.power_rad_cuisine_salleamanger_dispo
+        - input_boolean.power_rad_cuisine_salleamanger_ok        
       schedule:
       - rules:
-        - x: "OFF if float(state('sensor.linky_papp')) >= float(state('sensor.power_rad_3250'))  else Next()"
+        - x: "OFF if is_off('input_boolean.power_rad_cuisine_salleamanger_ok') else Next()"
         - x: "state('input_number.away_temperature') if is_on('input_boolean.absence_long_duree') else Next()"
         #télétravail:
         - x: >
@@ -264,7 +266,7 @@ schedy_heating:
       allow_manual_changes: true
       rescheduling_delay: 1 # overwrite conf manuelle au bout de 2h.
       actors:
-        climate.thermostat_entree:
+        climate.thermostat_entree_2:
       watched_entities:
         - input_number.entree_confort_temperature
         - input_boolean.heating_entree_enabled_1
@@ -272,10 +274,12 @@ schedy_heating:
         - input_boolean.heating_entree_enabled_1_w
         - binary_sensor.heating_entree_1
         - binary_sensor.heating_entree_2
-        - binary_sensor.heating_entree_1_w        
+        - binary_sensor.heating_entree_1_w
+        - binary_sensor.power_rad_entree_dispo
+        - input_boolean.power_rad_entree_ok        
       schedule:
       - rules:
-        - x: "OFF if float(state('sensor.linky_papp')) >= float(state('sensor.power_rad_1000'))  else Next()"
+        - x: "OFF if is_off('input_boolean.power_rad_entree_ok') else Next()"
         - x: "state('input_number.away_temperature') if is_on('input_boolean.absence_long_duree') else Next()"
         #semaine:
         - x: >

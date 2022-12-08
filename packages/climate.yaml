@@ -1,5 +1,6 @@
 climate:
-  - platform: smart_thermostat
+  #- platform: smart_thermostat
+  - platform: generic_thermostat
     name: Thermostat Bureau
     unique_id: smart_thermostat_bureau
     heater: switch.pilot_wire_bureau
@@ -7,18 +8,21 @@ climate:
     min_temp: 7
     max_temp: 28
     ac_mode: False
+    min_cycle_duration:
+      seconds: 5
     keep_alive:
-      seconds: 60
+      minutes: 3
     away_temp: 14
-    target_temp: 21
-    eco_temp: 15
-    boost_temp: 23
-    comfort_temp: 20
-    kp : 5
-    ki : 0.01
-    kd : 500
-    pwm : 00:15:00
-  - platform: smart_thermostat
+    target_temp: 19
+    #eco_temp: 15
+    #boost_temp: 23
+    comfort_temp: 19
+    #kp : 5
+    #ki : 0.01
+    #kd : 500
+    #pwm : 00:15:00
+  #- platform: smart_thermostat
+  - platform: generic_thermostat
     name: Thermostat Chambre
     unique_id: smart_thermostat_chambre
     heater: switch.pilot_wire_chambre
@@ -26,18 +30,21 @@ climate:
     min_temp: 7
     max_temp: 28
     ac_mode: False
+    min_cycle_duration:
+      seconds: 5
     keep_alive:
-      seconds: 60
+      minutes: 3
     away_temp: 14
-    target_temp: 21
-    eco_temp: 15
-    boost_temp: 23
-    comfort_temp: 20
-    kp : 5
-    ki : 0.01
-    kd : 500
-    pwm : 00:15:00
-  - platform: smart_thermostat
+    target_temp: 19
+    #eco_temp: 15
+    #boost_temp: 23
+    comfort_temp: 19
+    #kp : 5
+    #ki : 0.01
+    #kd : 500
+    #pwm : 00:15:00
+  #- platform: smart_thermostat
+  - platform: generic_thermostat
     name: Thermostat Petite Chambre
     unique_id: smart_thermostat_petitechambre
     heater: switch.pilot_wire_petitechambre
@@ -48,15 +55,16 @@ climate:
     keep_alive:
       seconds: 60
     away_temp: 14
-    target_temp: 21
-    eco_temp: 15
-    boost_temp: 23
-    comfort_temp: 20
-    kp : 5
-    ki : 0.01
-    kd : 500
-    pwm : 00:15:00
-  - platform: smart_thermostat
+    target_temp: 19
+    #eco_temp: 15
+    #boost_temp: 23
+    comfort_temp: 19
+    #kp : 5
+    #ki : 0.01
+    #kd : 500
+    #pwm : 00:15:00
+  #- platform: smart_thermostat
+  - platform: generic_thermostat
     name: Thermostat Salon
     unique_id: smart_thermostat_salon
     heater: switch.pilot_wire_salon
@@ -64,18 +72,21 @@ climate:
     min_temp: 7
     max_temp: 28
     ac_mode: False
+    min_cycle_duration:
+      seconds: 5
     keep_alive:
-      seconds: 60
+      minutes: 3
     away_temp: 14
-    target_temp: 21
-    eco_temp: 15
-    boost_temp: 23
-    comfort_temp: 20
-    kp : 5
-    ki : 0.01
-    kd : 500
-    pwm : 00:15:00
-  - platform: smart_thermostat
+    target_temp: 19
+    #eco_temp: 15
+    #boost_temp: 23
+    comfort_temp: 19
+    #kp : 5
+    #ki : 0.01
+    #kd : 500
+    #pwm : 00:15:00
+  #- platform: smart_thermostat
+  - platform: generic_thermostat
     name: Thermostat Cuisine Salle a manger
     unique_id: smart_thermostat_cuisine_salleamanger
     heater: group.group_cusine_salleamanger_pilot_wire
@@ -83,37 +94,44 @@ climate:
     min_temp: 7
     max_temp: 28
     ac_mode: False
+    min_cycle_duration:
+      seconds: 5
     keep_alive:
-      seconds: 60
+      minutes: 3
     away_temp: 14
-    target_temp: 21
-    eco_temp: 15
-    boost_temp: 23
-    comfort_temp: 20
-    kp : 5
-    ki : 0.01
-    kd : 500
-    pwm : 00:15:00
-  - platform: smart_thermostat
+    target_temp: 19
+    #eco_temp: 15
+    #boost_temp: 23
+    comfort_temp: 19
+    #kp : 5
+    #ki : 0.01
+    #kd : 500
+    #pwm : 00:15:00
+  #- platform: smart_thermostat
+  - platform: generic_thermostat
     name: Thermostat Entrée
     unique_id: smart_thermostat_entree
     heater: switch.pilot_wire_entree
     target_sensor: sensor.entree_temperature
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 5
+    keep_alive:
+      minutes: 3
     min_temp: 7
     max_temp: 28
     ac_mode: False
-    keep_alive:
-      seconds: 60
     away_temp: 14
-    target_temp: 21
-    eco_temp: 15
-    boost_temp: 23
-    comfort_temp: 20
-    kp : 5
-    ki : 0.01
-    kd : 500
-    pwm : 00:15:00
-  - platform: smart_thermostat
+    target_temp: 19
+    #eco_temp: 15
+    #boost_temp: 23
+    comfort_temp: 19
+    #kp : 5
+    #ki : 0.01
+    #kd : 500
+    #pwm : 00:15:00
+  #- platform: smart_thermostat
+  - platform: generic_thermostat
     name: Thermostat SdB
     unique_id: smart_thermostat_sdb
     heater: switch.pilot_wire_sdb
@@ -121,14 +139,16 @@ climate:
     min_temp: 7
     max_temp: 28
     ac_mode: False
+    min_cycle_duration:
+      seconds: 5
     keep_alive:
-      seconds: 60
+      minutes: 3
     away_temp: 14
-    target_temp: 21
-    eco_temp: 15
-    boost_temp: 23
-    comfort_temp: 20
-    kp : 5
-    ki : 0.01
-    kd : 500
-    pwm : 00:15:00
+    target_temp: 22
+    #eco_temp: 15
+    #boost_temp: 23
+    comfort_temp: 19
+    #kp : 5
+    #ki : 0.01
+    #kd : 500
+    #pwm : 00:15:00

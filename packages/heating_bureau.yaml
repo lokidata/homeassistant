@@ -42,6 +42,10 @@ binary_sensor:
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('binary_sensor.not_workday_status') == 'on'
             and states('input_boolean.heating_bureau_enabled_1_w') == 'on' }}
+      power_rad_bureau_dispo:
+        friendly_name: Puissance dispo
+        value_template: >
+          {{ states('sensor.linky_i_sousc') | int *200 - states('sensor.linky_papp') | int <= 1250 }} 
 
 
 input_boolean:
@@ -51,7 +55,9 @@ input_boolean:
   heating_bureau_enabled_1_w: # WEEKEND
     name: Plage Active
     icon: mdi:toggle-switch
-
+  power_rad_bureau_ok:
+    name: Thermostat activé
+    icon: mdi:toggle-switch
 
 script:
   heating_bureau_boost:
@@ -107,8 +113,8 @@ sensor:
     temp_up_th_bureau: # Pour History Graph
       friendly_name: "Chauffage Température"
       value_template: > 
-        {% if is_state('climate.thermostat_bureau', 'heat') %}
-          Chauffe {{state_attr ('climate.thermostat_bureau', 'temperature')}}°
+        {% if is_state('climate.thermostat_bureau_2', 'heat') %}
+          Chauffe {{state_attr ('climate.thermostat_bureau_2', 'temperature')}}°
         {% else %}
           Off
         {% endif %}

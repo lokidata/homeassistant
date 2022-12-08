@@ -37,19 +37,20 @@ binary_sensor:
           {% set t = states('sensor.time') %}
           {% set start = states('input_datetime.heating_chambre_start_1') [0:5] %}
           {% set stop = states('input_datetime.heating_chambre_end_1') [0:5] %}
-          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('input_select.workday') == 'Bureau'  
             and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_chambre_enabled_1') == 'on' }}
       heating_chambre_1_t: # TELETRVAIL
         friendly_name: Mode Confort
         value_template: >
           {% set t = states('sensor.time') %}
-          {% set start = states('input_datetime.heating_chambre_start_2') [0:5] %}
-          {% set stop = states('input_datetime.heating_chambre_end_2') [0:5] %}
+          {% set start = states('input_datetime.heating_chambre_start_1_t') [0:5] %}
+          {% set stop = states('input_datetime.heating_chambre_end_1_t') [0:5] %}
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('input_select.workday') == 'Télétravail'
             and states('binary_sensor.workday_status') == 'on'
-            and states('input_boolean.heating_chambre_enabled_2') == 'on' }}
+            and states('input_boolean.heating_chambre_enabled_1_t') == 'on' }}
       heating_chambre_1_w: # WEEKEND
         friendly_name: Mode Confort
         value_template: >
@@ -59,6 +60,10 @@ binary_sensor:
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('binary_sensor.not_workday_status') == 'on'
             and states('input_boolean.heating_chambre_enabled_1_w') == 'on' }}
+      power_rad_chambre_dispo:
+        friendly_name: Puissance dispo
+        value_template: >
+          {{ states('sensor.linky_i_sousc') | int *200 - states('sensor.linky_papp') | int <= 1250 }} 
 
 
 input_boolean:
@@ -73,6 +78,9 @@ input_boolean:
     icon: mdi:toggle-switch
   heating_chambre_boost: # WEEKEND
     name: Mode Boost
+    icon: mdi:toggle-switch
+  power_rad_chambre_ok:
+    name: Thermostat activé
     icon: mdi:toggle-switch
 
 script:
@@ -129,8 +137,8 @@ sensor:
     temp_up_th_chambre: # Pour History Graph
       friendly_name: "Chauffage Température"
       value_template: > 
-        {% if is_state('climate.thermostat_chambre', 'heat') %}
-          Chauffe {{state_attr ('climate.thermostat_chambre', 'temperature')}}°
+        {% if is_state('climate.thermostat_chambre_2', 'heat') %}
+          Chauffe {{state_attr ('climate.thermostat_chambre_2', 'temperature')}}°
         {% else %}
           Off
         {% endif %}
