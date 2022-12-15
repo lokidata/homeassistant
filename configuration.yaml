@@ -8,6 +8,7 @@ homeassistant:
 
   latitude: !secret latitute
   longitude: !secret longitude
+  country: !secret country
 
   unit_system: metric
 
