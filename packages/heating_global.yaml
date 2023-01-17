@@ -3,6 +3,7 @@ input_select:
     name: Workday
     options:
       - Bureau
+      - Bureau 8h
       - Télétravail
       - Férié / Vacances
     initial: Bureau

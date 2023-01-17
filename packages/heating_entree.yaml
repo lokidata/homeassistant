@@ -16,7 +16,14 @@ input_datetime:
     name: "Confort : Fin"
     has_date: false
     has_time: true
-
+  heating_entree_start_3:
+    name: "Confort : Début"
+    has_date: false
+    has_time: true
+  heating_entree_end_3:
+    name: "Confort : Fin"
+    has_date: false
+    has_time: true
 # WEEKEND
   heating_entree_start_1_w:
     name: "Confort : Début"
@@ -49,6 +56,16 @@ binary_sensor:
           {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
             and states('binary_sensor.workday_status') == 'on'
             and states('input_boolean.heating_entree_enabled_2') == 'on' }}
+      heating_entree_3:
+        friendly_name: Mode Confort
+        value_template: >
+          {% set t = states('sensor.time') %}
+          {% set start = states('input_datetime.heating_entree_start_3') [0:5] %}
+          {% set stop = states('input_datetime.heating_entree_end_3') [0:5] %}
+          {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+            and states('input_select.workday') == 'Bureau 8h' 
+            and states('binary_sensor.workday_status') == 'on'
+            and states('input_boolean.heating_entree_enabled_3') == 'on' }}
       heating_entree_1_w: # WEEKEND
         friendly_name: Mode Confort
         value_template: >
@@ -70,7 +87,9 @@ input_boolean:
   heating_entree_enabled_2:
     name: Plage Active
     icon: mdi:toggle-switch
-
+  heating_entree_enabled_3:
+    name: Plage Active
+    icon: mdi:toggle-switch
   heating_entree_enabled_1_w: # WEEKEND
     name: Plage Active
     icon: mdi:toggle-switch

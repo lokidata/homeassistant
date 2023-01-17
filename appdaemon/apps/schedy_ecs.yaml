@@ -29,3 +29,4 @@ schedy_ecs:
       - rules:
         - x: "'on' if (is_on('input_boolean.ecs_enabled_1') and (is_on('binary_sensor.ecs_1'))) else Next()"
         - x: "'on' if (is_on('input_boolean.ecs_enabled_2') and (is_on('binary_sensor.ecs_2'))) else Next()"
+        - x: "'on' if (is_on('input_boolean.ecs_enabled_2') and (is_on('binary_sensor.ecs_3'))) else Next()"

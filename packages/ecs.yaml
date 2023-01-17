@@ -9,11 +9,19 @@ input_datetime:
     has_date: false
     has_time: true
   ecs_start_2:
-    name: "Plage Après-Midi : Début"
+    name: "Plage Nuit : Début"
     has_date: false
     has_time: true
   ecs_end_2:
-    name: "Plage Après-Midi : Fin"
+    name: "Plage Nuit : Fin"
+    has_date: false
+    has_time: true
+  ecs_start_3:
+    name: "Plage Nuit: Début"
+    has_date: false
+    has_time: true
+  ecs_end_3:
+    name: "Plage Nuit : Fin"
     has_date: false
     has_time: true
 
@@ -32,7 +40,8 @@ binary_sensor:
         {% set t = states('sensor.time') %}
         {% set start = states('input_datetime.ecs_start_1') [0:5] %}
         {% set stop = states('input_datetime.ecs_end_1') [0:5] %}
-        {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
+        {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true
+          and states('input_select.workday') != 'Bureau 8h'  
           and states('sensor.linky_ptec') == 'HC..'
           and states('input_boolean.ecs_enabled_1') == 'on' }}
     ecs_2: # SEMAINE
@@ -44,6 +53,16 @@ binary_sensor:
         {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
           and states('sensor.linky_ptec') == 'HC..'
           and states('input_boolean.ecs_enabled_2') == 'on' }}
+    ecs_3: # SEMAINE
+      friendly_name: Plage Nuit
+      value_template: >
+        {% set t = states('sensor.time') %}
+        {% set start = states('input_datetime.ecs_start_3') [0:5] %}
+        {% set stop = states('input_datetime.ecs_end_3') [0:5] %}
+        {{ (start <= t < stop if start < stop else (start <= t or t < stop)) == true 
+          and states('input_select.workday') == 'Bureau 8h' 
+          and states('sensor.linky_ptec') == 'HC..'
+          and states('input_boolean.ecs_enabled_3') == 'on' }}
 
 input_boolean:
   ecs_enabled_1: #SEMAINE
@@ -51,6 +70,9 @@ input_boolean:
     icon: mdi:toggle-switch
   ecs_enabled_2:
     name: Après-Midi
+    icon: mdi:toggle-switch
+  ecs_enabled_3: #SEMAINE
+    name: Nuit
     icon: mdi:toggle-switch
 
 input_number:

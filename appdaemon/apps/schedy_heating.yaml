@@ -34,9 +34,11 @@ schedy_heating:
         - binary_sensor.snzb04_sdb_porte_contact
         - input_number.sdb_confort_temperature
         - input_boolean.heating_sdb_enabled_1
+        - input_boolean.heating_sdb_enabled_2
         - input_boolean.heating_sdb_enabled_1_t
         - input_boolean.heating_sdb_enabled_1_w
         - binary_sensor.heating_sdb_1
+        - binary_sensor.heating_sdb_2
         - binary_sensor.heating_sdb_1_t
         - binary_sensor.heating_sdb_1_w
         - input_boolean.power_rad_sdb_ok
@@ -48,6 +50,10 @@ schedy_heating:
         - x: >
             state('input_number.sdb_confort_temperature')
             if (is_on('input_boolean.heating_sdb_enabled_1') and (is_on('binary_sensor.heating_sdb_1')))
+            else Next()
+        - x: >
+            state('input_number.sdb_confort_temperature')
+            if (is_on('input_boolean.heating_sdb_enabled_2') and (is_on('binary_sensor.heating_sdb_2')))
             else Next()  
         #teletravail:
         - x: >
@@ -98,9 +104,11 @@ schedy_heating:
       watched_entities:
         - input_number.chambre_confort_temperature
         - input_boolean.heating_chambre_enabled_1
+        - input_boolean.heating_chambre_enabled_2
         - input_boolean.heating_chambre_enabled_1_t
         - input_boolean.heating_chambre_enabled_1_w
         - binary_sensor.heating_chambre_1
+        - binary_sensor.heating_chambre_2
         - binary_sensor.heating_chambre_1_t
         - binary_sensor.heating_chambre_1_w
         - input_boolean.power_rad_chambre_ok
@@ -114,6 +122,11 @@ schedy_heating:
             state('input_number.chambre_confort_temperature')
             if (is_on('input_boolean.heating_chambre_enabled_1') and (is_on('binary_sensor.heating_chambre_1')))
             else Next()
+        - x: >
+            state('input_number.chambre_confort_temperature')
+            if (is_on('input_boolean.heating_chambre_enabled_2') and (is_on('binary_sensor.heating_chambre_2')))
+            else Next()
+        #teletravail
         - x: >
             state('input_number.chambre_confort_temperature')
             if (is_on('input_boolean.heating_chambre_enabled_1_t') and (is_on('binary_sensor.heating_chambre_1_t')))
@@ -163,12 +176,14 @@ schedy_heating:
         - input_number.salon_confort_temperature
         - input_boolean.heating_salon_enabled_1
         - input_boolean.heating_salon_enabled_2
+        - input_boolean.heating_salon_enabled_3
         - input_boolean.heating_salon_enabled_1_t
         - input_boolean.heating_salon_enabled_2_t
         - input_boolean.heating_salon_enabled_3_t
         - input_boolean.heating_salon_enabled_1_w
         - binary_sensor.heating_salon_1
         - binary_sensor.heating_salon_2
+        - binary_sensor.heating_salon_3
         - binary_sensor.heating_salon_1_t
         - binary_sensor.heating_salon_2_t
         - binary_sensor.heating_salon_3_t
@@ -200,6 +215,10 @@ schedy_heating:
             state('input_number.salon_confort_temperature')
             if (is_on('input_boolean.heating_salon_enabled_2') and (is_on('binary_sensor.heating_salon_2')))
             else Next()
+        - x: >
+            state('input_number.salon_confort_temperature')
+            if (is_on('input_boolean.heating_salon_enabled_3') and (is_on('binary_sensor.heating_salon_3')))
+            else Next()
         #weekend
         - x: >
             state('input_number.salon_confort_temperature')
@@ -216,12 +235,14 @@ schedy_heating:
         - input_number.cuisine_salleamanger_confort_temperature
         - input_boolean.heating_cuisine_salleamanger_enabled_1
         - input_boolean.heating_cuisine_salleamanger_enabled_2
+        - input_boolean.heating_cuisine_salleamanger_enabled_3
         - input_boolean.heating_cuisine_salleamanger_enabled_1_t
         - input_boolean.heating_cuisine_salleamanger_enabled_2_t
         - input_boolean.heating_cuisine_salleamanger_enabled_3_t
         - input_boolean.heating_cuisine_salleamanger_enabled_1_w
         - binary_sensor.heating_cuisine_salleamanger_1
         - binary_sensor.heating_cuisine_salleamanger_2
+        - binary_sensor.heating_cuisine_salleamanger_3
         - binary_sensor.heating_cuisine_salleamanger_1_t
         - binary_sensor.heating_cuisine_salleamanger_2_t
         - binary_sensor.heating_cuisine_salleamanger_3_t
@@ -254,6 +275,10 @@ schedy_heating:
             state('input_number.cuisine_salleamanger_confort_temperature')
             if (is_on('input_boolean.heating_cuisine_salleamanger_enabled_2') and (is_on('binary_sensor.heating_cuisine_salleamanger_2')))
             else Next()
+        - x: >
+            state('input_number.cuisine_salleamanger_confort_temperature')
+            if (is_on('input_boolean.heating_cuisine_salleamanger_enabled_3') and (is_on('binary_sensor.heating_cuisine_salleamanger_3')))
+            else Next()
         #weekend
         - x: >
             state('input_number.cuisine_salleamanger_confort_temperature')
@@ -271,9 +296,11 @@ schedy_heating:
         - input_number.entree_confort_temperature
         - input_boolean.heating_entree_enabled_1
         - input_boolean.heating_entree_enabled_2
+        - input_boolean.heating_entree_enabled_3
         - input_boolean.heating_entree_enabled_1_w
         - binary_sensor.heating_entree_1
         - binary_sensor.heating_entree_2
+        - binary_sensor.heating_entree_3
         - binary_sensor.heating_entree_1_w
         - binary_sensor.power_rad_entree_dispo
         - input_boolean.power_rad_entree_ok        
@@ -289,6 +316,10 @@ schedy_heating:
         - x: >
             state('input_number.entree_confort_temperature')
             if (is_on('input_boolean.heating_entree_enabled_2') and (is_on('binary_sensor.heating_entree_2')))
+            else Next()
+        - x: >
+            state('input_number.entree_confort_temperature')
+            if (is_on('input_boolean.heating_entree_enabled_3') and (is_on('binary_sensor.heating_entree_3')))
             else Next()
         #weekend
         - x: >
