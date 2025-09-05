@@ -6,9 +6,20 @@ automation:
     event: start
     offset: 0:0:0
     entity_id: calendar.perso
+  - platform: homeassistant
+    event: start
   condition: []
   action:
   - choose:
+    - conditions:
+      - condition: template
+        value_template: "{{ 'Bureau 8h' in trigger.calendar_event.summary }}"
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Bureau 8h
+        target:
+          entity_id: input_select.workday
     - conditions:
       - condition: template
         value_template: "{{ 'Bureau' in trigger.calendar_event.summary }}"
@@ -25,15 +36,6 @@ automation:
       - service: input_select.select_option
         data:
           option: Télétravail
-        target:
-          entity_id: input_select.workday
-    - conditions:
-      - condition: template
-        value_template: "{{ 'Bureau 8h' in trigger.calendar_event.summary }}"
-      sequence:
-      - service: input_select.select_option
-        data:
-          option: Bureau 8h
         target:
           entity_id: input_select.workday
     - conditions:

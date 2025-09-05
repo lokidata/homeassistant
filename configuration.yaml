@@ -27,7 +27,7 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 google_assistant: !include "integration/google_assistant.yaml"
-o365: !include "integration/o365.yaml"
+
 influxdb: !include "integration/influx.yaml"
 
 
@@ -58,21 +58,7 @@ http:
     - !secret trusted_poxie2
     - !secret trusted_poxie3
 
-media_player:
-  - platform: androidtv
-    name: Salon NVIDIA Shield
-    host: !secret ip_shield
-    apps:
-      tv.emby.embyatv: Emby
-      com.wakanim.androidtv: Wakanim
-      com.canal.android.canal: MyCanal
-  - platform: androidtv
-    name: Salon TV
-    host: !secret ip_tv
-    apps:
-      tv.emby.embyatv: Emby
-      com.wakanim.androidtv: Wakanim
-      com.canal.android.canal: MyCanal
+
       
 
 
@@ -88,3 +74,7 @@ camera:
     attributes:
       - calibration_points 
 
+media_player:
+  - platform: emby
+    host: 192.168.1.253
+    api_key: a5b6b74758d04175b39834594056a3a2

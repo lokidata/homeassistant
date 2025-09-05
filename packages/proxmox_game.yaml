@@ -1,0 +1,8 @@
+command_line:
+  - switch:
+      name: proxmox_gaming_on_off
+      command_on: "witch openssl || apk add openssl && /bin/bash /config/shell/nanokvm.sh"
+      command_off: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /config/ssh/id_rsa root@192.168.1.201 shutdown -t now"
+      command_state: "ping 192.168.1.201 -c 2"
+
+

@@ -1,8 +1,8 @@
-switch:
-- platform: command_line
-  switches:
-    nas:
-      command_on: "which ipmitool || apk add ipmitool && ipmitool -I lanplus -H 192.168.1.250 -U admin -P admin chassis power on"
+command_line:
+  - switch:
+      name: nas_on_off
+      command_on: "which ipmiutil || apk add ipmiutil && ipmiutil power -u -N 192.168.1.250 -U admin -P admin"
       command_off: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /config/ssh/id_rsa root@192.168.1.253 shutdown -t now"
       command_state: "ping 192.168.1.253 -c 2"
-      friendly_name: nas_on_off
+
+

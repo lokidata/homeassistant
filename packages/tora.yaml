@@ -1,0 +1,6 @@
+command_line:
+  - switch:
+      name: tora_off_on
+      command_on: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /config/ssh/id_rsa_neko root@192.168.1.200 /root/wakeonlan_pcfixe.sh"
+      command_off: "curl http://192.168.1.35:5001/shutdown"
+      command_state: "ping 192.168.1.35 -c 2"
